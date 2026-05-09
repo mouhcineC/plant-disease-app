@@ -36,7 +36,7 @@ export function AuthProvider({ children }) {
 
   const login = async (payload) => {
     const response = await authLogin(payload);
-    const nextToken = response?.data?.token || "";
+    const nextToken = response?.data?.auth_token || response?.data?.token || "";
     const email = payload?.email || "";
     setToken(nextToken);
     setUserEmail(email);
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
 
   const register = async (payload) => {
     const response = await authRegister(payload);
-    const nextToken = response?.data?.token || "";
+    const nextToken = response?.data?.auth_token || response?.data?.token || "";
     const email = payload?.email || "";
     setToken(nextToken);
     setUserEmail(email);
@@ -82,4 +82,3 @@ export function useAuth() {
   }
   return context;
 }
-

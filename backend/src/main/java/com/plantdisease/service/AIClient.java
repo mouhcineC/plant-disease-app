@@ -44,9 +44,12 @@ public class AIClient {
         HttpEntity<MultiValueMap<String, Object>> requestEntity =
                 new HttpEntity<>(body, headers);
 
+        String baseUrl = aiServiceUrl != null ? aiServiceUrl.replaceAll("/+$", "") : "";
+        String endpoint = baseUrl.endsWith("/api") ? baseUrl + "/predict" : baseUrl + "/api/predict";
+
         ResponseEntity<PredictionResponse> response =
                 restTemplate.exchange(
-                        aiServiceUrl + "/predict",
+                        endpoint,
                         HttpMethod.POST,
                         requestEntity,
                         PredictionResponse.class

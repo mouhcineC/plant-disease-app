@@ -144,9 +144,9 @@ SOLUTIONS = {
         "prevention": "Ensure good air circulation, avoid wetting foliage"
     },
     "Tomato yellow leaf curl virus": {
-    "chemical":   "Control whitefly with systemic insecticides",
-    "organic":    "Use reflective mulch, remove infected plants",
-    "prevention": "Use resistant varieties, control whitefly population"
+        "chemical":   "Control whitefly with systemic insecticides",
+        "organic":    "Use reflective mulch, remove infected plants",
+        "prevention": "Use resistant varieties, control whitefly population"
     },
     "Healthy": {
         "chemical":   "No treatment needed",
@@ -194,7 +194,7 @@ import os
 def generate_explanation(plant: str, disease: str, confidence: float, severity: str, solutions: dict) -> str:
     try:
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        
+
         prompt = f"""
         A plant disease detection AI analyzed a leaf image and found the following:
         - Plant: {plant}
@@ -210,15 +210,15 @@ def generate_explanation(plant: str, disease: str, confidence: float, severity: 
         Explain what the disease is, how serious it is, and what they should do.
         Do not use technical jargon. Be direct and helpful.
         """
-        
+
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=200
         )
-        
+
         return response.choices[0].message.content
-    
+
     except Exception as e:
         print(f"Groq API error: {e}")
         return f"Your {plant} plant has been detected with {disease}. Please follow the recommended treatments below."
