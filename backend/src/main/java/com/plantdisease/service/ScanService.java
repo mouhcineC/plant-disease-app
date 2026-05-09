@@ -41,6 +41,13 @@ public class ScanService {
 
         //4Send image to AI Service
         PredictionResponse aiResult = aiClient.predict(file);
+        if (aiResult == null) {
+            throw new CustomException("AI service returned an empty response");
+        }
+        if ("error".equalsIgnoreCase(aiResult.getStatus())) {
+            String message = aiResult.getMessage() != null ? aiResult.getMessage() : "AI service could not process the image";
+            throw new CustomException(message);
+        }
         //5Save prediction result
         Prediction  prediction = Prediction.builder()
                 .scan(scan)

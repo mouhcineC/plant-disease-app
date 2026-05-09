@@ -42,7 +42,7 @@ public class AuthService {
                 .orElseThrow(() -> new CustomException("Invalid email or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+            throw new CustomException("Invalid email or password");
         }
         String token = jwtService.generateToken(user.getEmail());
         return new AuthResponse(

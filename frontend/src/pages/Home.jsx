@@ -108,6 +108,17 @@ function Home() {
     return diseaseInsights[prediction.disease] || defaultInsight;
   }, [prediction]);
 
+  const aiSolutions = useMemo(() => {
+    if (!prediction?.solutions) {
+      return [];
+    }
+    const { chemical, organic, prevention } = prediction.solutions;
+    return [chemical, organic, prevention].filter(Boolean);
+  }, [prediction]);
+
+  const explanationText = prediction?.explanation || insight.description;
+  const recommendations = aiSolutions.length ? aiSolutions : insight.recommendations;
+
   const handlePickFile = () => {
     uploadRef.current?.click();
   };
@@ -402,13 +413,13 @@ function Home() {
 
                     <div className="space-y-2 rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4">
                       <p className="text-sm font-semibold text-emerald-900">About this disease</p>
-                      <p className="text-sm text-emerald-700/70">{insight.description}</p>
+                      <p className="text-sm text-emerald-700/70">{explanationText}</p>
                     </div>
 
                     <div>
                       <p className="text-sm font-semibold text-emerald-900">Recommendations</p>
                       <ul className="mt-2 space-y-2 text-sm text-emerald-700/70">
-                        {insight.recommendations.map((item) => (
+                        {recommendations.map((item) => (
                           <li key={item} className="flex items-start gap-2">
                             <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
                             {item}

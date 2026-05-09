@@ -35,4 +35,4 @@ Expected response:
 }
 ```
 
-Note: `/predict` is not implemented in `ai-service/app/main.py` yet, so `/api/scan` will fail until this endpoint is added.
+This endpoint is implemented in `ai-service/app/routes/prediction.py` and is mounted by `ai-service/app/main.py`.

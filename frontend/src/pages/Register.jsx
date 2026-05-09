@@ -43,7 +43,7 @@ function Register() {
         password: formData.password,
       };
       const response = await register(payload);
-      const token = response?.data?.token;
+      const token = response?.data?.auth_token || response?.data?.token;
       if (!token) {
         setIsError(true);
         setMessage("Registration succeeded but no token was returned.");
