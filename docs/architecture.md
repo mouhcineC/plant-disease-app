@@ -15,31 +15,31 @@ Persistence is handled by **MySQL**.
 ### Frontend (React + Tailwind)
 
 - Renders UI and sends API requests to backend.
-- Uses `VITE_API_BASE_URL` to target backend.
+- Uses `VITE_API_BASE_URL` to target backend (should include `/api`).
 
 ### Backend (Spring Boot)
 
 - Exposes auth endpoints under `/api/auth/**`.
-- Validates requests and stores user data in MySQL.
+- Exposes scan endpoints under `/api/scan` and `/api/scan/history`.
 - Applies security rules (auth endpoints public; others protected).
-- Integrates with AI service through `AI_SERVICE_URL` (current integration placeholder).
+- Integrates with AI service through `AI_SERVICE_URL` and expects `/predict`.
 
 ### AI Service (FastAPI)
 
 - Exposes `/health` endpoint.
-- Will host disease prediction endpoints (next phase).
+- Should expose `/predict` for disease inference (required by backend).
 
 ### Database (MySQL)
 
-- Stores application data (users and future domain entities).
+- Stores application data (users, scans, predictions).
 - Backend connects via service name `mysql` inside Docker network.
 
 ## Runtime Communication Flow
 
 1. User accesses frontend (`:3000`).
-2. Frontend calls backend (`:8080`).
+2. Frontend calls backend (`:8080/api`).
 3. Backend reads/writes MySQL (`mysql:3306`).
-4. Backend can call AI service (`ai-service:8000`) for inference operations.
+4. Backend calls AI service (`ai-service:8000`) for inference operations.
 
 ## Deployment View (Docker Compose)
 
@@ -51,7 +51,6 @@ Persistence is handled by **MySQL**.
 
 ## Architectural Notes for PFE
 
-- Current implementation establishes base infrastructure and auth flow.
-- Next major step is adding plant-image inference endpoints and model versioning.
+- Auth, scan, and history flows are wired in the backend and frontend.
+- AI inference endpoint remains to be implemented in the AI service.
 - Add diagrams in `docs/diagrams/` and sequence diagrams in `docs/uml/` as implementation evolves.
-

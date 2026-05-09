@@ -26,6 +26,8 @@ Services:
 
 - [ ] Strong `JWT_SECRET`
 - [ ] Secure DB credentials
+- [ ] Secure Cloudinary credentials
+- [ ] `VITE_API_BASE_URL` points to `/api`
 - [ ] HTTPS enabled
 - [ ] CORS restricted to trusted domains
 - [ ] Health checks monitored

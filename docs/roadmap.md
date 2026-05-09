@@ -11,14 +11,14 @@
 
 ## Phase 2 - Core Disease Detection
 
-- [ ] Add image upload endpoint in backend
+- [x] Add image upload endpoint in backend
 - [ ] Add inference endpoint in AI service
-- [ ] Connect backend to AI service inference endpoint
-- [ ] Return prediction result + confidence to frontend
+- [x] Backend integrates with AI service `/predict` (expects endpoint)
+- [x] Return prediction result + confidence to frontend
 
 ## Phase 3 - Product Features
 
-- [ ] User history of predictions
+- [x] User history of predictions
 - [ ] Disease details and treatment suggestions
 - [ ] Better frontend UX and validation
 
@@ -28,4 +28,3 @@
 - [ ] API documentation completion
 - [ ] Security hardening (JWT filters, role rules)
 - [ ] Deployment pipeline + final PFE demo preparation
-

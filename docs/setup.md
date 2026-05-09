@@ -83,7 +83,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`
 - `JWT_SECRET`, `JWT_EXPIRATION_MS`
 - `AI_SERVICE_PORT`, `AI_SERVICE_URL`
-- `VITE_API_BASE_URL`
+- `VITE_API_BASE_URL` (should include `/api`, e.g. `http://localhost:8080/api`)
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
 
 See `.env.example` for defaults.
-

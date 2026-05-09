@@ -22,7 +22,7 @@ Response (200):
 
 ```json
 {
-  "token": null,
+  "token": "<jwt_token>",
   "message": "User registered successfully"
 }
 ```
@@ -44,13 +44,55 @@ Response (200):
 
 ```json
 {
-  "token": null,
-  "message": "Login successful"
+  "token": "<jwt_token>",
+  "message": "User logged in successfully"
 }
 ```
 
-## Notes
+## Scan Endpoints (JWT required)
 
-- JWT generation is not yet wired; `token` is currently `null`.
-- Endpoints under `/api/auth/**` are public in current security config.
+Use the header:
 
+```
+Authorization: Bearer <jwt_token>
+```
+
+### `POST /api/scan`
+
+Upload a leaf image (multipart form).
+
+Form data:
+- `file`: image file
+
+Response (200):
+
+```json
+{
+  "plant": "Tomato",
+  "disease": "Early Blight",
+  "confidence": 0.94
+}
+```
+
+### `GET /api/scan/history`
+
+Return scan history (latest first).
+
+Response (200):
+
+```json
+[
+  {
+    "imageUrl": "https://...",
+    "plant": "Tomato",
+    "disease": "Early Blight",
+    "confidence": 0.94,
+    "createdAt": "2026-04-28T10:32:14.123"
+  }
+]
+```
+
+## Error Notes
+
+- `401 Unauthorized` when the JWT is missing or invalid.
+- `400 Bad Request` with `"User not found"` when the token email does not exist in the DB.

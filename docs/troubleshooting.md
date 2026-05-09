@@ -55,19 +55,25 @@ Typical causes:
 ### 2) 401 on endpoints
 
 - In current config, `/api/auth/**` is public; others are protected.
-- If testing other endpoints, provide valid auth once JWT flow is completed.
+- Ensure the frontend is sending `Authorization: Bearer <token>` on `/api/scan` and `/api/scan/history`.
 
 ## Frontend issues
 
 ### API calls target wrong backend URL
 
-- Verify `VITE_API_BASE_URL` value in `.env` and compose build args.
+- `VITE_API_BASE_URL` should include `/api` (example: `http://localhost:8080/api`).
 - Rebuild frontend image after changing env/build args:
 
 ```powershell
 docker compose build --no-cache frontend
 docker compose up -d frontend
 ```
+
+### History shows "Unable to load history"
+
+- Check browser Network tab for status code.
+- `401` usually means missing/expired JWT.
+- `400` with `"User not found"` means the token email does not exist in DB.
 
 ## Useful diagnostic commands
 
@@ -76,4 +82,3 @@ docker compose config
 docker compose ps -a
 docker compose logs --tail=100
 ```
-
