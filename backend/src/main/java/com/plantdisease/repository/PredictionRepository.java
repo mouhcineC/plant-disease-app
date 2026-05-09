@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface PredictionRepository extends JpaRepository<Prediction,Long> {
    Optional<Prediction>  findByScan(Scan scan);
+   void deleteByScan(Scan scan);
+   void deleteByScanId(Long scanId);
 }

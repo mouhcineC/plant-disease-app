@@ -2,11 +2,14 @@ package com.plantdisease.service;
 
 import com.plantdisease.dto.PredictionResponse;
 import com.plantdisease.exception.CustomException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -18,6 +21,8 @@ public class AIClient {
 
     @Value("${app.ai-service.url}")
     private String aiServiceUrl;
+
+    private final ObjectMapper objectMapper;
 
     public PredictionResponse predict(MultipartFile file) {
 
@@ -47,15 +52,36 @@ public class AIClient {
         String baseUrl = aiServiceUrl != null ? aiServiceUrl.replaceAll("/+$", "") : "";
         String endpoint = baseUrl.endsWith("/api") ? baseUrl + "/predict" : baseUrl + "/api/predict";
 
-        ResponseEntity<PredictionResponse> response =
-                restTemplate.exchange(
-                        endpoint,
-                        HttpMethod.POST,
-                        requestEntity,
-                        PredictionResponse.class
-                );
+        try {
+            ResponseEntity<PredictionResponse> response =
+                    restTemplate.exchange(
+                            endpoint,
+                            HttpMethod.POST,
+                            requestEntity,
+                            PredictionResponse.class
+                    );
+            return response.getBody();
+        } catch (RestClientResponseException ex) {
+            String aiMessage = extractMessage(ex.getResponseBodyAsString());
+            throw new CustomException(aiMessage != null ? aiMessage : "AI service error");
+        } catch (Exception ex) {
+            throw new CustomException("AI service unavailable");
+        }
+    }
 
-        return response.getBody();
+    private String extractMessage(String body) {
+        if (body == null || body.isBlank()) {
+            return null;
+        }
+        try {
+            JsonNode node = objectMapper.readTree(body);
+            if (node.hasNonNull("message")) {
+                return node.get("message").asText();
+            }
+        } catch (Exception ignored) {
+            return null;
+        }
+        return null;
     }
 
 

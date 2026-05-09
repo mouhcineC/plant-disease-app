@@ -1,6 +1,6 @@
 # Roadmap
 
-## Phase 1 - Foundation (done/in progress)
+## Phase 1 - Foundation (done)
 
 - [x] Monorepo structure created
 - [x] Frontend starter (React + Tailwind)
@@ -9,22 +9,24 @@
 - [x] Docker Compose for full stack
 - [x] Auth register/login base flow
 
-## Phase 2 - Core Disease Detection
+## Phase 2 - Core Disease Detection (done)
 
 - [x] Add image upload endpoint in backend
-- [ ] Add inference endpoint in AI service
-- [x] Backend integrates with AI service `/predict` (expects endpoint)
+- [x] Add inference endpoint in AI service
+- [x] Backend integrates with AI service `/api/predict`
 - [x] Return prediction result + confidence to frontend
 
-## Phase 3 - Product Features
+## Phase 3 - Product Features (done/in progress)
 
 - [x] User history of predictions
-- [ ] Disease details and treatment suggestions
-- [ ] Better frontend UX and validation
+- [x] AI explanations, severity, and solutions persisted
+- [x] Scan delete endpoint and UI
+- [x] Improved frontend UX and guidance
 
-## Phase 4 - Quality and Delivery
+## Phase 4 - Quality and Delivery (next)
 
 - [ ] Unit/integration tests per service
-- [ ] API documentation completion
-- [ ] Security hardening (JWT filters, role rules)
+- [ ] DB migrations (Flyway or Liquibase)
+- [ ] API documentation polish + examples
+- [ ] Security hardening (roles, token rotation)
 - [ ] Deployment pipeline + final PFE demo preparation

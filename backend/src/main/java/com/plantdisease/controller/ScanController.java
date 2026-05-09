@@ -31,5 +31,11 @@ public class ScanController {
         String userEmail = authentication.getName();
         return ResponseEntity.ok(scanService.getUserHistory(userEmail));
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteScan(@PathVariable Long id, Authentication authentication) {
+        String userEmail = authentication.getName();
+        scanService.deleteScan(id, userEmail);
+        return ResponseEntity.noContent().build();
+    }
 
 }
