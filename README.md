@@ -43,13 +43,3 @@ Stop services:
 docker compose down
 ```
 
-## Environment Notes
-- `VITE_API_BASE_URL` should include `/api` (example: `http://localhost:8080/api`).
-- CORS is configured for `http://localhost:3000`.
-- JWT secrets and Cloudinary credentials are required for production-like runs.
-
-## Next Steps
-- Add automated tests per service (unit + integration).
-- Add DB migration tooling (Flyway/Liquibase) for schema evolution.
-- Add admin/analytics insights (aggregate history stats).
-- Production hardening: HTTPS, strict CORS, monitoring, backups.
