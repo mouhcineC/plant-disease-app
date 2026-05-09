@@ -17,6 +17,13 @@ public class Prediction {
     private String plant ;
     private String disease;
     private Float confidence;
+    private String severity;
+    @Column(columnDefinition = "TEXT")
+    private String explanation;
+    @Column(columnDefinition = "TEXT")
+    private String solutions;
+    @Column(columnDefinition = "TEXT")
+    private String topPredictions;
     @OneToOne
     @JoinColumn(name = "scan_id" , nullable = false)
     private Scan scan;

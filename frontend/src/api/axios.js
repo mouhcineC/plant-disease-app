@@ -45,5 +45,6 @@ export const scanImage = (file) => {
 };
 
 export const fetchHistory = () => api.get("/scan/history");
+export const deleteScan = (id) => api.delete(`/scan/${id}`);
 
 export default api;

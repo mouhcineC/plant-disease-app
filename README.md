@@ -5,8 +5,16 @@ Monorepo for a PFE project: plant disease detection with a React frontend, Sprin
 ## Stack
 - `frontend/`: React + Vite + Tailwind CSS
 - `backend/`: Spring Boot + Spring Security + JWT + MySQL
-- `ai-service/`: FastAPI (health endpoint; prediction endpoint required by backend)
+- `ai-service/`: FastAPI + TensorFlow/Keras
 - `docs/`: architecture, setup, API docs, troubleshooting, roadmap
+
+## Key Features (current)
+- JWT auth (register/login)
+- Secure scan upload with `multipart/form-data`
+- AI inference results including confidence, severity, explanations, and solutions
+- Scan history with AI details, expand/collapse, and delete
+- CORS configured for local frontend
+- Docker Compose for full stack
 
 ## Quick Structure
 - `frontend/src/`
@@ -17,12 +25,21 @@ Monorepo for a PFE project: plant disease detection with a React frontend, Sprin
 
 ## Run everything with Docker
 
-Each service now has its own container definition and the root `docker-compose.yml` starts the full stack:
+Each service has its own container definition and the root `docker-compose.yml` starts the full stack:
 
 - `frontend` on http://localhost:3000
 - `backend` on http://localhost:8080
 - `ai-service` on http://localhost:8000
-- `mysql` on port 3306
+- `mysql` on port 3306 (host port is 3307)
 
+```powershell
+Set-Location "D:\PFE\plant-disease-app"
+docker compose up --build
+```
 
+Stop services:
+
+```powershell
+docker compose down
+```
 
