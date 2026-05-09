@@ -8,7 +8,7 @@ router = APIRouter()
 async def predict(file: UploadFile = File(...)):
     result = await predict_disease(file)
 
-    if result["confidence"] < 0.5:
+    if result["confidence"] < 0.75:
         return JSONResponse(content={
             "status":  "error",
             "code":    "LOW_CONFIDENCE",
