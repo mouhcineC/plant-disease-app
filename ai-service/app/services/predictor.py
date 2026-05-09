@@ -188,6 +188,41 @@ SEVERITY = {
     "Healthy":                                 "none"
 }
 
+from groq import Groq
+import os
+
+def generate_explanation(plant: str, disease: str, confidence: float, severity: str, solutions: dict) -> str:
+    try:
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        
+        prompt = f"""
+        A plant disease detection AI analyzed a leaf image and found the following:
+        - Plant: {plant}
+        - Disease: {disease}
+        - Confidence: {confidence * 100:.1f}%
+        - Severity: {severity}
+        - Recommended treatments:
+          * Chemical: {solutions.get('chemical', 'N/A')}
+          * Organic: {solutions.get('organic', 'N/A')}
+          * Prevention: {solutions.get('prevention', 'N/A')}
+
+        Write a clear, friendly 3-4 sentence explanation for a farmer who is not technical.
+        Explain what the disease is, how serious it is, and what they should do.
+        Do not use technical jargon. Be direct and helpful.
+        """
+        
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=200
+        )
+        
+        return response.choices[0].message.content
+    
+    except Exception as e:
+        print(f"Groq API error: {e}")
+        return f"Your {plant} plant has been detected with {disease}. Please follow the recommended treatments below."
+
 async def predict_disease(file):
     contents = await file.read()
     img      = Image.open(io.BytesIO(contents))
@@ -203,12 +238,18 @@ async def predict_disease(file):
     })
     severity = SEVERITY.get(disease_key, "moderate")
 
+    # Generate natural language explanation
+    explanation = generate_explanation(
+        result["plant"], disease, result["confidence"], severity, solution
+    )
+
     return {
         "status":          "success",
         "plant":           result["plant"],
         "disease":         disease,
         "confidence":      result["confidence"],
         "severity":        severity,
+        "explanation":     explanation,
         "solutions":       solution,
         "top_predictions": result["top_predictions"]
     }
