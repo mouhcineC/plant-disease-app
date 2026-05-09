@@ -349,6 +349,8 @@ function Home() {
                 "Detect Disease"
               )}
             </button>
+
+            <GuidanceNote />
           </div>
 
           <div className="grid gap-6">
@@ -546,6 +548,33 @@ function Spinner({ className }) {
     >
       <circle cx="12" cy="12" r="9" className="opacity-20" />
       <path d="M21 12a9 9 0 0 1-9 9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function GuidanceNote() {
+  return (
+    <div className="rounded-2xl border border-amber-200/70 bg-amber-50/90 px-4 py-3 text-xs text-amber-900 shadow-sm">
+      <div className="flex items-start gap-2">
+        <InfoIcon className="mt-0.5 h-4 w-4 text-amber-600" />
+        <div>
+          <p className="font-semibold text-amber-900">Important for best accuracy</p>
+          <p className="mt-1 text-amber-800/80">
+            Best results are achieved with a clear, well-lit close-up photo of a single plant leaf on a
+            simple background.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoIcon({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8h.01" strokeLinecap="round" />
+      <path d="M11 12h1v4h1" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

@@ -22,12 +22,18 @@ This folder contains technical and project documentation for the Plant Disease D
 
 - `frontend/`: React + Vite + Tailwind CSS
 - `backend/`: Spring Boot + Spring Security + MySQL
-- `ai-service/`: FastAPI + TensorFlow/Keras (health endpoint wired)
+- `ai-service/`: FastAPI + TensorFlow/Keras
 - Root orchestration: Docker Compose
 
 ## Documentation Status
 
 - Setup, architecture, deployment, and troubleshooting docs are current.
-- API docs cover auth, scan, history, and AI health endpoints.
-- AI inference endpoint (`/predict`) is described but not implemented in the AI service yet.
-- Diagram placeholders are ready for exported visuals from draw.io/StarUML/PlantUML.
+- API docs cover auth, scan, history, AI inference, and health endpoints.
+- History includes AI explanations, solutions, and top predictions.
+- Delete scan endpoint is available for history cleanup.
+
+## Next Steps
+
+- Add test strategy and sample test cases in `docs/`.
+- Add schema migration notes once Flyway/Liquibase is introduced.
+- Add production runbook (monitoring, alerts, backups).
